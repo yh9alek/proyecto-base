@@ -1,0 +1,57 @@
+# Entradas por defecto
+*.log
+*.lock
+.DS_Store
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.fleet
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+Homestead.json
+Homestead.yaml
+
+# Repositorios independientes / Código compartido
+resources/assets/
+resources/views/components/
+resources/views/layouts/
+
+# Docker
+docker-compose.override.yml
+
+# Sail u otros entornos locales
+.sail.env
+
+# Archivos de sistema de Windows/Linux
+Thumbs.db
+desktop.ini
+
+# Cobertura de tests y reportes
+/coverage
+/reports
+
+# Documentación con phpDoc u otros
+/docs/api
+
+# Archivos temporales de editores
+*.swp
+*.swo
+*~
+
+# Herramientas de análisis estático
+/.phpstan.cache
+/.php-cs-fixer.cache
+.php_cs.cache
