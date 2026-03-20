@@ -1,18 +1,24 @@
 <x-app-layout>
-    {{-- 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Home
-        </h2>
-    </x-slot> 
-    --}}
+     
+    
+    <h1 class="mb-2 text-[35px] font-bold">Nomina</h1>
+    <x-app.breadcrumb :links="[
+        'Panel' => '/dashboard',
+        'Usuarios' => '/users',
+        'Editar Usuario' => null
+    ]" />
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <x-modal id="mi-modal" title="Confirmar acción" size="max-w-lg">
 
-            
+        <x-alert type="warning" title="Título"> Cuidado, se viene proyecto para TMAZ. </x-alert>
 
-        </div>
-    </div>
+        <x-slot:actions>
+            <button class="btn btn-primary">Confirmar</button>
+        </x-slot:actions>
+
+    </x-modal>            
+
+    <button class="btn btn-primary" onclick="document.getElementById('mi-modal').showModal()">Hola que hace</button>
+
 
 </x-app-layout>
