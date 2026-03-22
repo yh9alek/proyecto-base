@@ -1,7 +1,7 @@
 <x-app-layout>
      
     
-    <h1 class="mb-2 text-[35px] font-bold">Nomina</h1>
+    {{-- <h1 class="mb-2 text-[35px] font-bold">Nómina</h1>
     <x-app.breadcrumb :links="[
         'Panel' => '/dashboard',
         'Usuarios' => '/users',
@@ -18,7 +18,7 @@
 
     </x-modal>            
 
-    <button class="btn btn-primary" onclick="document.getElementById('mi-modal').showModal()">Hola que hace</button>
+    <button class="btn btn-primary" onclick="document.getElementById('mi-modal').showModal()">Hola que hace</button> --}}
 
 
 </x-app-layout>

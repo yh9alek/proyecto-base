@@ -9,12 +9,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use App\Models\Perfil;
+use App\Traits\HasPublicUlid;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasPublicUlid, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.

@@ -19,6 +19,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "fast-glob": "^3.3.3",
         "material-symbols": "^0.42.2"
     }
 }
