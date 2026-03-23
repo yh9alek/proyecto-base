@@ -10,7 +10,7 @@
     </div>
 
     @push('scripts')
-        @vite('resources/assets/js/pages/usuarios.js')
+        @vite('resources/views/js/usuarios.js')
     @endpush
 
 </x-app-layout>

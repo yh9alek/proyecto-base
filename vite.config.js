@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import { glob } from 'fast-glob';
 
-const pages = glob.sync('resources/assets/js/pages/**/*.js', {
+const pages = glob.sync('resources/views/js/**/*.js', {
     cwd: process.cwd(),
 });
 
@@ -17,10 +17,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    server: {
-        host: '0.0.0.0',
-        hmr: {
-            host: '192.168.1.38', // tu IP local
-        },
-    },
+    // server: {
+    //     host: '0.0.0.0',
+    //     hmr: {
+    //         host: '192.168.1.10', //IP local para exponer en la red
+    //     },
+    // },
 });
