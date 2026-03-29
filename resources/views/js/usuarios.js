@@ -8,8 +8,9 @@ const btnAgregar = {
 };
 
 new Select('#select-usuarios', {
-    url: '/usuarios/data',
-    serverSide: true,
+    required: true,
+    url: '/usuarios/list',
+    serverSide: false,
     labelKey: 'name',
     valueKey: 'ulid',
     name: 'user_id',
@@ -51,3 +52,5 @@ new Grid('#tabla-usuarios', '/usuarios/data', {
         }
     ],
 });
+
+const validator = new FormValidator('#registrar-usuarios-form');

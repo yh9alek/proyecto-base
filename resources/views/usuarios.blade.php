@@ -11,32 +11,69 @@
 
     <x-modal id="modal-agregar" title="Agregar usuarios" size="max-w-2xl">
 
-        <div class="grid grid-cols-6 gap-y-0 gap-x-10">
+        <form novalidate id="registrar-usuarios-form" class="grid grid-cols-6 gap-y-0 gap-x-10">
 
             <x-input.text 
                 type="email" 
                 label="Email:" 
                 name="email"
                 id="email"
-                class="mt-1 border border-base-350"
                 autofocus
                 placeholder="example@gmail.com"
-                autocomplete="username"
+                required
 
                 :col-span="3"
-                :value="old('email')"  
-                :errors="$errors->get('email')"
             />
 
             <div class="col-span-full sm:col-span-3">
-                <p for="select-usuarios" class="my-2 text-[13px]">Usuarios:</p>
+                <p class="mt-2 mb-1 text-[13px]">Usuarios: <span class="text-error">*</span></p>
                 <div id="select-usuarios"></div>
             </div>
 
-        </div>
+            <x-input.text
+                type="text"
+                label="Edad:"
+                name="edad"
+                id="edad"
+                autofocus
+                placeholder="asdasd"
+                required
+
+                :col-span="2"
+            />
+            <x-input.text 
+                type="email" 
+                label="Email:" 
+                name="email"
+                id="email"
+                autofocus
+                placeholder="example@gmail.com"
+                required
+
+                :col-span="4"
+            />
+
+            <x-input.text
+                type="number"
+                label="Edad:"
+                name="edad"
+                id="edad"
+                autofocus
+                placeholder="00"
+                required
+
+                :col-span="1"
+            />
+
+            <div class="col-span-2">
+                <p class="mt-2 mb-1 text-[13px]">Usuarios: <span class="text-error">*</span></p>
+                <input type="checkbox" class="checkbox checkbox-sm checkbox-secondary" required/>
+            </div>
+
+        </form>
 
         <x-slot:actions>
-            <button class="btn btn-primary">
+            <button type="submit" form="registrar-usuarios-form" class="btn btn-primary">
                 <span class="material-symbols-rounded">
                     save
                 </span>
