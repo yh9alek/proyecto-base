@@ -4,6 +4,9 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
+/**
+ * No exponer publicamente IDs numéricos PK's y FK's.
+ */
 trait HasPublicUlid
 {
     use HasUlids;

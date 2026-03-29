@@ -40,6 +40,17 @@ class User extends Authenticatable
     ];
 
     /**
+     * Columnas que serán usadas como índices.
+     */
+    protected $indexed = [
+        'name', 'email'
+    ];
+
+    public function getIndexed(): array {
+        return [...$this->indexed];
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

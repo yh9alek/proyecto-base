@@ -2,41 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Traits\Listable;
+use App\Traits\Paginable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UsuarioController extends Controller
 {
-    public function data(Request $request)
-    {
-        $query = DB::table('users')
-            ->select(['ulid', 'name', 'email']);
+    use Paginable, Listable;
+    
+    protected $model = User::class;
 
-        // Búsqueda
-        if ($search = $request->input('search')) {
-            $query->whereRaw(
-                "MATCH(name, email) AGAINST(? IN BOOLEAN MODE)",
-                [$search]
-            );
-        }
-
-        // Paginación
-        $perPage  = $request->input('limit', 8);
-        $paginate = $query->paginate($perPage);
-
-        return response()->json([
-            'items' => $paginate->items(),
-            'meta'  => [
-                'total'        => $paginate->total(),
-                'last_page'    => $paginate->lastPage(),
-                'current_page' => $paginate->currentPage(),
-                'from'         => $paginate->firstItem(),
-                'to'           => $paginate->lastItem(),
-            ],
-        ]);
-    }
-
-    // public function store(User $uuid) {
-
-    // }
+    # -------------------------------------
 }

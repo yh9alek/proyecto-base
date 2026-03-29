@@ -17,10 +17,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    // server: {
-    //     host: '0.0.0.0',
-    //     hmr: {
-    //         host: '192.168.1.10', //IP local para exponer en la red
-    //     },
-    // },
+    server: {
+        host: '0.0.0.0',
+        hmr: {
+            host: '192.168.1.14', //IP local para exponer en la red
+        },
+    },
 });

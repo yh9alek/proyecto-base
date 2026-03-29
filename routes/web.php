@@ -15,6 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     Route::view('/usuarios', 'usuarios');
     Route::get('/usuarios/data', [UsuarioController::class, 'data']);
+    Route::get('/usuarios/list', [UsuarioController::class, 'list']);
 
 });
 
