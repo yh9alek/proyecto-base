@@ -39,4 +39,9 @@ trait HasPublicUlid
 
         return ['id', ...$fks];
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'ulid';
+    }
 }

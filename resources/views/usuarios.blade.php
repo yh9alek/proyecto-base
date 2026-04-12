@@ -13,6 +13,11 @@
 
         <form novalidate id="registrar-usuarios-form" class="grid grid-cols-6 gap-y-0 gap-x-10">
 
+            <div class="col-span-full sm:col-span-3">
+                <p class="mt-2 mb-1 text-[13px]">Módulo dependiente: <span class="text-error">*</span></p>
+                <div id="select-modulo"></div>
+            </div>
+
             <x-input.text 
                 type="email" 
                 label="Email:" 
@@ -24,11 +29,6 @@
 
                 :col-span="3"
             />
-
-            <div class="col-span-full sm:col-span-3">
-                <p class="mt-2 mb-1 text-[13px]">Usuarios: <span class="text-error">*</span></p>
-                <div id="select-usuarios"></div>
-            </div>
 
             <x-input.text
                 type="text"
@@ -64,11 +64,6 @@
 
                 :col-span="1"
             />
-
-            <div class="col-span-2">
-                <p class="mt-2 mb-1 text-[13px]">Usuarios: <span class="text-error">*</span></p>
-                <input type="checkbox" class="checkbox checkbox-sm checkbox-secondary" required/>
-            </div>
 
         </form>
 

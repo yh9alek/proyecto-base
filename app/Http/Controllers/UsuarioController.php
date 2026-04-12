@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class UsuarioController extends Controller
 {
-    use Paginable, Listable;
-    
-    protected $model = User::class;
-
-    # -------------------------------------
+    public function index() {
+        return view('usuarios');
+    }
 }

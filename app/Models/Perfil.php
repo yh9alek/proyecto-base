@@ -42,21 +42,22 @@ class Perfil extends Model
      */
     public function modulosParaSidebar(): \Illuminate\Support\Collection
     {
-        // IDs de todos los módulos a los que tiene acceso este perfil
         $modulosPermitidos = $this->modulos()->pluck('modulos.id');
 
-        // Módulos raíz que el perfil tiene asignados directamente
-        // o que tienen al menos un hijo asignado
         return Modulo::with(['children' => function ($query) use ($modulosPermitidos) {
-                    $query->whereIn('id', $modulosPermitidos);
+                    $query->whereIn('id', $modulosPermitidos)
+                        ->where('estatus', 1)
+                        ->orderBy('orden');
                 }])
                 ->raiz()
                 ->where(function ($query) use ($modulosPermitidos) {
                     $query->whereIn('id', $modulosPermitidos)
-                          ->orWhereHas('children', function ($q) use ($modulosPermitidos) {
-                              $q->whereIn('id', $modulosPermitidos);
-                          });
+                        ->orWhereHas('children', function ($q) use ($modulosPermitidos) {
+                            $q->whereIn('id', $modulosPermitidos);
+                        });
                 })
+                ->where('estatus', 1)
+                ->orderBy('orden')
                 ->get();
     }
 }

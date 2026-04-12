@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "fast-glob": "^3.3.3",
-        "material-symbols": "^0.42.2"
+        "material-symbols": "^0.42.2",
+        "sweetalert2": "^11.26.24"
     }
 }
