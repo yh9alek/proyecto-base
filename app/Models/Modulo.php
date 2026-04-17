@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use App\Traits\HasPublicUlid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Modulo extends Model
 {
-    use HasApiTokens, HasFactory, HasPublicUlid;
+    use HasApiTokens, HasFactory, HasPublicUlid, Auditable;
 
     protected $table = 'modulos';
 
@@ -25,8 +26,6 @@ class Modulo extends Model
         'uri',
         'orden',
         'estatus',
-        'usuario_alta',
-        'usuario_mod',
     ];
 
     // ─────────────────────────────────────────
@@ -98,13 +97,6 @@ class Modulo extends Model
             if ($modulo->orden !== $nuevoOrden) {
                 $modulo->update(['orden' => $nuevoOrden]);
             }
-        });
-    }
-
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            $model->updated_at = null;
         });
     }
 }

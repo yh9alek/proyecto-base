@@ -40,7 +40,6 @@ class ModuloController extends Controller
                 'descripcion'    => $data['descripcion'] ?? null,
                 'modulo_raiz_id' => $raizId,
                 'orden'          => $orden,
-                'usuario_alta'   => Auth::id(),
             ]);
 
             Auth::user()->perfil->modulos()->attach($modulo->id);
@@ -92,7 +91,6 @@ class ModuloController extends Controller
                 'descripcion'    => $data['descripcion'] ?? null,
                 'modulo_raiz_id' => $raizId,
                 'orden'          => $orden,
-                'usuario_mod'    => Auth::id(),
             ]);
 
             // Luego normalizamos, ya con el módulo en su nueva posición

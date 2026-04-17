@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use App\Traits\HasPublicUlid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Perfil extends Model
 {
-    use HasFactory, HasPublicUlid;
+    use HasFactory, HasPublicUlid, Auditable;
 
     protected $table = 'perfiles';
 
@@ -17,6 +19,7 @@ class Perfil extends Model
         'ulid',
         'nombre',
         'descripcion',
+        'estatus',
         'usuario_alta',
         'usuario_mod',
     ];
@@ -30,6 +33,10 @@ class Perfil extends Model
     {
         return $this->belongsToMany(Modulo::class, 'perfiles_modulos')
                     ->withTimestamps();
+    }
+
+    public function usuarios(): HasMany {
+        return $this->hasMany(User::class);
     }
 
     // ─────────────────────────────────────────

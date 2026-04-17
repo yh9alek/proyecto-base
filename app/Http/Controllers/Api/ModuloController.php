@@ -55,4 +55,21 @@ class ModuloController extends Controller
             Modulo::raiz()->get()
         );
     }
+
+    public function arbol() {
+        $tree = Modulo::whereNull('modulo_raiz_id')
+            ->with(['children' => fn($q) => $q->orderBy('orden')])
+            ->orderBy('orden')
+            ->get()
+            ->map(fn($raiz) => [
+                'id'       => $raiz->ulid,
+                'text'     => $raiz->nombre,
+                'children' => $raiz->children->map(fn($hijo) => [
+                    'id'   => $hijo->ulid,
+                    'text' => $hijo->nombre,
+                ])->values(),
+            ])->values();
+ 
+        return response()->json($tree);
+    }
 }
