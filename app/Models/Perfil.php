@@ -20,8 +20,6 @@ class Perfil extends Model
         'nombre',
         'descripcion',
         'estatus',
-        'usuario_alta',
-        'usuario_mod',
     ];
 
     // ─────────────────────────────────────────

@@ -11,36 +11,25 @@
 
     <x-modal id="modal-agregar" title="Agregar usuarios" size="max-w-2xl">
 
-        <form novalidate id="registrar-usuarios-form" class="grid grid-cols-6 gap-y-0 gap-x-10">
+        <form novalidate id="usuarios-form" class="grid grid-cols-12 gap-y-0 gap-x-10">
 
-            <div class="col-span-full sm:col-span-3">
-                <p class="mt-2 mb-1 text-[13px]">Módulo dependiente: <span class="text-error">*</span></p>
-                <div id="select-modulo"></div>
+            <div class="col-span-full sm:col-span-4">
+                <p class="mt-2 mb-1 text-[13px]">Perfil: <span class="text-error">*</span></p>
+                <div id="select-perfil" data-key=""></div>
             </div>
 
             <x-input.text 
-                type="email" 
-                label="Email:" 
-                name="email"
-                id="email"
+                type="text" 
+                label="Nombre:" 
+                name="name"
+                id="name"
                 autofocus
-                placeholder="example@gmail.com"
+                placeholder="Escriba el nombre"
                 required
 
-                :col-span="3"
+                :col-span="4"
             />
 
-            <x-input.text
-                type="text"
-                label="Edad:"
-                name="edad"
-                id="edad"
-                autofocus
-                placeholder="asdasd"
-                required
-
-                :col-span="2"
-            />
             <x-input.text 
                 type="email" 
                 label="Email:" 
@@ -53,22 +42,22 @@
                 :col-span="4"
             />
 
-            <x-input.text
-                type="number"
-                label="Edad:"
-                name="edad"
-                id="edad"
+            <x-input.text 
+                type="password" 
+                label="Contraseña:" 
+                name="password"
+                id="password"
                 autofocus
-                placeholder="00"
+                placeholder="********"
                 required
 
-                :col-span="1"
+                :col-span="4"
             />
 
         </form>
 
         <x-slot:actions>
-            <button type="submit" form="registrar-usuarios-form" class="btn btn-primary">
+            <button type="submit" form="usuarios-form" class="btn btn-primary">
                 <span class="material-symbols-rounded">
                     save
                 </span>

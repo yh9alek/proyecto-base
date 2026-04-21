@@ -16,7 +16,9 @@ class PerfilController extends Controller
 {
     public function index()
     {
-        return new PerfilCollection(Perfil::all());
+        return new PerfilCollection(
+            Perfil::all()
+        );
     }
  
     public function store(PerfilRequest $request)

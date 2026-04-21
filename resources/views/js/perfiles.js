@@ -115,7 +115,6 @@ const btnAgregar = {
 tablePerfiles = new Grid('#tabla-perfiles', '/perfiles', {
     headerButton: btnAgregar,
     serverSide:   false,
-    dataPath:     'data',
     columns: [
         { key: 'nombre',      label: 'Nombre' },
         { key: 'descripcion', label: 'Descripción' },

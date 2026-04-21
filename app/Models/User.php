@@ -9,13 +9,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use App\Models\Perfil;
+use App\Traits\Auditable;
 use App\Traits\HasPublicUlid;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasPublicUlid, HasFactory, Notifiable;
+    use HasPublicUlid, HasFactory, Notifiable, Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'email',
         'password',
         'perfil_id',
+        'estatus'
     ];
 
     /**
@@ -38,17 +40,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-    /**
-     * Columnas que serán usadas como índices.
-     */
-    protected $indexed = [
-        'name', 'email'
-    ];
-
-    public function getIndexed(): array {
-        return [...$this->indexed];
-    }
 
     /**
      * Get the attributes that should be cast.

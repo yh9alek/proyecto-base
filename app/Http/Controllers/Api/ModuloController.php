@@ -37,11 +37,7 @@ class ModuloController extends Controller
 
     public function update(ModuloRequest $request, Modulo $modulo) {
 
-        $modulo->update([
-            ...$request->validated(),
-            'usuario_mod' => Auth::id()
-        ]);
-
+        $modulo->update($request->validated());
         return new ModuloResource($modulo);
     }
 

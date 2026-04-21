@@ -1,56 +1,106 @@
-const modalAgregar = document.querySelector('#modal-agregar');
+const modalAgregar = document.getElementById('modal-agregar');
+
+let esUpdate    = false;
+let usuarioUlid = null;
+
+let selectPerfil = new Select('#select-perfil', {
+    url: '/perfiles',
+    name: 'perfil_ulid',
+    labelKey: 'nombre',
+    valueKey: 'ulid',
+    searchable: false,
+    required: true,
+});
+
+const abrirModalEditar = (row) => {
+    
+    modalAgregar.showModal();
+    selectPerfil.setValue(row.perfilUlid);
+    usuarioUlid = row.ulid;
+    esUpdate = true;
+
+    cargarFormulario('#usuarios-form', row);
+
+};
 
 const btnAgregar = {
     text: 'Agregar',
     icon: 'add_circle',
     className: 'btn btn-primary btn-agregar',
-    onClick: (grid) => modalAgregar.showModal()
+    onClick: (grid) => {
+        modalAgregar.showModal();
+        esUpdate = false;
+    }
 };
 
-// new Select('#select-usuarios', {
-//     required: true,
-//     url: '/usuarios/list',
-//     serverSide: false,
-//     labelKey: 'name',
-//     valueKey: 'ulid',
-//     name: 'user_id',
-//     limit: 8,
-// });
+const tableUsuarios = new Grid('#tabla-usuarios', '/usuarios', {
+    headerButton: btnAgregar,
+    serverSide: false,
+    rowsPerPage: 8,
+    columns: [
+        { key: 'name',  label: 'Nombre' },
+        { key: 'email', label: 'Correo' },
+        {
+            key: 'actions',
+            label: '...',
+            render: (row) => [
+                Grid.createAction({
+                    title:   'Editar',
+                    icon:    'edit_note',
+                    onClick: () => abrirModalEditar(row),
+                }),
+ 
+                Grid.createAction({
+                    title:   parseInt(row.estatus) ? 'Inhabilitar'          : 'Habilitar',
+                    icon:    parseInt(row.estatus) ? 'check_circle'         : 'do_not_disturb_on',
+                    color:   parseInt(row.estatus) ? 'var(--color-success)' : 'var(--color-error)',
+                    onClick: async () => {
 
-// new Grid('#tabla-usuarios', '/usuarios/list', {
-//     headerButton: btnAgregar,
-//     serverSide: false,
-//     rowsPerPage: 8,
-//     columns: [
-//         { key: 'name',  label: 'Nombre' },
-//         { 
-//             key: 'email', label: 'Correo', 
-//             render: (row) => `
-//                 <div class="alert alert-warning px-4 py-2">${row.email}</div>
-//             `
-//         },
-//         {
-//             key: 'actions',
-//             label: '...',
-//             render: (row) => [
-//                 `<button title="Editar" class="grid-button grid place-items-center h-7.5 tooltip" data-tip="Editar">
-//                     <span class="material-symbols-rounded icon-filled color-base-content" style="font-size:18px;">
-//                         edit_note
-//                     </span>
-//                 </button>`,
-//                 `<button title="Eliminar" class="grid-button grid place-items-center h-7.5 tooltip" data-tip="Eliminar">
-//                     <span class="material-symbols-rounded icon-filled" style="color:#FF6B6B; font-size:18px;">
-//                         cancel
-//                     </span>
-//                 </button>`,
-//                 `<button title="Info." class="grid-button grid place-items-center h-7.5 tooltip" data-tip="Info.">
-//                     <span class="material-symbols-rounded icon-filled" style="color:var(--color-primary); font-size:18px;">
-//                         info
-//                     </span>
-//                 </button>`,
-//             ]
-//         }
-//     ],
-// });
+                        const mensaje = parseInt(row.estatus)
+                            ? '¿Desea Inhabilitar a este usuario?'
+                            : '¿Habilitar Usuario?';
 
-const validator = new FormValidator('#registrar-usuarios-form');
+                        const respuesta = await mostrarConfirmacion(mensaje);
+
+                        const estatus   = Number(!Boolean(parseInt(row.estatus)));
+
+                        if(respuesta) {
+                            try {
+                                await axios.put(`/usuarios/${row.ulid}`, { estatus });
+                                tableUsuarios.recargarDatos();
+                            } catch(error) {
+                                console.error('Error: ', error);
+                            }
+                        }
+                    },
+                }),
+ 
+                Grid.createAction({
+                    title:   'Info.',
+                    icon:    'info',
+                    color:   'var(--color-primary)',
+                    onClick: () => mostrarInfo(row),
+                }),
+            ]
+        }
+    ],
+});
+
+const validator = new FormValidator('#usuarios-form', {
+    onSubmit: async (form, isValid) => {
+        if (!isValid) return;
+
+        const data = Object.fromEntries(new FormData(form));
+
+        try {
+
+            esUpdate ? await axios.put(`/usuarios/${usuarioUlid}`, data)
+                     : await axios.post('/usuarios', data);
+            
+            tableUsuarios.recargarDatos();
+
+        } catch (error) {
+            console.error(error);
+        }
+    },
+});

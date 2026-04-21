@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
 trait Auditable
@@ -26,5 +28,13 @@ trait Auditable
                 $model->usuario_mod = Auth::id();
             }
         });
+    }
+
+    public function userAlta(): BelongsTo {
+        return $this->belongsTo(User::class, 'usuario_alta');
+    }
+
+    public function userMod(): BelongsTo {
+        return $this->belongsTo(User::class, 'usuario_mod');
     }
 }

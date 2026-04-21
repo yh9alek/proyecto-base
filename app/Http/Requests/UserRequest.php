@@ -6,14 +6,14 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class ModuloRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::user()->perfil->nombre === 'Administrador';;
+        return Auth::user()->perfil->nombre === 'Administrador';
     }
 
     /**
@@ -27,14 +27,11 @@ class ModuloRequest extends FormRequest
         $isOptional = ($isUpdate ? 'sometimes' : 'required');
 
         return [
-            'modulo-dependiente' => 'nullable|exists:modulos,ulid',
-
-            'nombre' => $isOptional . '|string|max:30',
-            'icono'  => $isOptional . '|string|max:30',
-            'estatus'=> 'sometimes|boolean',
-            'uri'    => 'sometimes|nullable|string',
-            'orden'  => 'sometimes|nullable|numeric',
-            'descripcion' => 'sometimes|nullable|string'
+            'name'        => $isOptional . '|string|max:255',
+            'email'       => $isOptional . '|email|max:255',
+            'password'    => $isOptional . '|string|max:8',
+            'perfil_ulid' => 'sometimes|nullable|exists:perfiles,ulid',
+            'estatus'     => 'sometimes|boolean',
         ];
     }
 }

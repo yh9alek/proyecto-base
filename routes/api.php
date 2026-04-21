@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\PerfilController;
 use App\Http\Controllers\Api\ModuloController;
+use App\Http\Controllers\Api\UserController;
 
 Route::middleware('auth:sanctum')->group(function() {
 
@@ -18,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function() {
         });
 
         Route::apiResources([
+            'usuarios' => UserController::class,
             'perfiles' => PerfilController::class,
             'modulos'  => ModuloController::class
         ]);
