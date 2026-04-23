@@ -15,7 +15,7 @@
             <!-- Correo Electrónico -->
             <div>
                 <x-input.text label="Email:" id="email" class="mt-1" type="email"
-                    name="email" :value="old('email')" autofocus required autocomplete="username" :errorMessages="$errors->get('email')">
+                    name="email" autofocus required autocomplete="username" :errorMessages="$errors->get('email')">
 
                     <x-slot:iconLeft>
                         <svg class="h-[1em] opacity-75" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -66,6 +66,11 @@
                                 </svg>
                             </x-slot>
                         </x-alert>
+                        <style>
+                            .alert-title {
+                                color: oklch(44.4% .177 26.899) !important;
+                            }
+                        </style>
                     @endforeach
                 @endif
             </div>
