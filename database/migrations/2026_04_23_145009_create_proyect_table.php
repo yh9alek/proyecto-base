@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -67,8 +68,9 @@ return new class extends Migration
             $table->tinyInteger('orden')->default(1);
             $table->unsignedTinyInteger('estatus')->default(1);
             $table->unsignedBigInteger('usuario_alta');
+            $table->timestamp('created_at')->nullable();
             $table->unsignedBigInteger('usuario_mod')->nullable();
-            $table->timestamps();
+            $table->timestamp('updated_at')->nullable();
 
             $table->index(['icono', 'nombre'], 'modulos_idx_btree');
         });
@@ -84,9 +86,11 @@ return new class extends Migration
             $table->char('ulid', 26)->unique();
             $table->string('nombre', 30);
             $table->text('descripcion')->nullable();
+            $table->unsignedTinyInteger('estatus')->default(1);
             $table->unsignedBigInteger('usuario_alta');
-            $table->unsignedBigInteger('usuario_mod');
-            $table->timestamps();
+            $table->timestamp('created_at');
+            $table->unsignedBigInteger('usuario_mod')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
 
         Schema::create('perfiles_modulos', function (Blueprint $table) {
@@ -109,14 +113,18 @@ return new class extends Migration
 
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('ulid', 26);
+            $table->char('ulid', 26)->unique('inx_ulid_users');
             $table->string('name');
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->unsignedBigInteger('perfil_id')->nullable()->index('users_perfil_id_foreign');
-            $table->timestamps();
+            $table->tinyInteger('estatus')->default(1);
+            $table->unsignedBigInteger('usuario_alta');
+            $table->timestamp('created_at');
+            $table->bigInteger('usuario_mod')->nullable();
+            $table->timestamp('updated_at')->nullable();
 
             $table->fullText(['name', 'email'], 'idx_fulltext_users_search');
         });
