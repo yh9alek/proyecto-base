@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <h1 class="mb-2 text-[35px] font-bold">Usuarios</h1>
+    <x-app.title> Usuarios </x-app.title>
     <x-app.breadcrumb :links="[
         'Usuarios' => '/usuarios',
     ]" />
@@ -11,7 +11,7 @@
 
     <x-modal id="modal-agregar" title="Agregar usuarios" size="max-w-2xl">
 
-        <form novalidate id="usuarios-form" class="grid grid-cols-12 gap-y-0 gap-x-10">
+        <form novalidate id="usuarios-form" class="grid grid-cols-1 sm:grid-cols-12 gap-y-0 gap-x-10">
 
             <div class="col-span-full sm:col-span-4">
                 <p class="mt-2 mb-1 text-[13px]">Perfil: <span class="text-error">*</span></p>

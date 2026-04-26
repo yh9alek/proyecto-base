@@ -77,26 +77,4 @@ class Modulo extends Model
     protected function scopeModuloDependienteULID($query, $id) {
         return $query->where('id', $id);
     }
-
-    public static function normalizarOrden(?int $raizId, ?int $moduloAnclaId = null, ?int $ordenAncla = null): void
-    {
-        $modulos = Modulo::where('modulo_raiz_id', $raizId)
-            ->orderBy('orden')
-            ->orderBy('id')
-            ->get();
-
-        // Si hay un módulo ancla (el que se está moviendo), lo reposicionamos en la colección
-        if ($moduloAnclaId && $ordenAncla) {
-            $modulos = $modulos->filter(fn($m) => $m->id !== $moduloAnclaId)->values();
-            $modulos->splice($ordenAncla - 1, 0, [Modulo::find($moduloAnclaId)]);
-            $modulos = collect($modulos);
-        }
-
-        $modulos->each(function ($modulo, $index) {
-            $nuevoOrden = $index + 1;
-            if ($modulo->orden !== $nuevoOrden) {
-                $modulo->update(['orden' => $nuevoOrden]);
-            }
-        });
-    }
 }

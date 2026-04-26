@@ -7,7 +7,7 @@
             @csrf
 
             <div>
-                <x-app.application-logo class="w-20 h-20 fill-current"/>
+                <x-app.application-logo class="block mx-auto mt-2 mb-5"/>
                 <p class="block w-min mx-auto px-3 py-1 mb-3 rounded-xl bg-success text-white font-bold text-[16px]">{{ env('APP_NAME') }}</p>
                 <p class="text-center font-semibold text-[#12233D]">{{ env('APP_DESC') }}</p>
             </div>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="mt-4">
-                <button type="submit" class="btn btn-primary block w-full mb-5">{{ __('Log In') }}</button>
+                <button type="submit" class="btn btn-primary block w-full mb-5"><span class="relative -top-2.5 sm:top-0!">{{ __('Log In') }}</span></button>
                 @if ($errors->get('auth'))
                     @foreach ($errors->get('auth') as $error)
                         <x-alert type="error" title="{{ $error }}">

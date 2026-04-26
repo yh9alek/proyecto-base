@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\ResolverOrdenModulo;
+use App\Actions\Modulos\ActualizarModuloAction;
+use App\Actions\Modulos\RegistrarModuloAction;
 use App\Http\Requests\ModuloRequest;
 use App\Models\Modulo;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use SweetAlert2\Laravel\Swal;
 
 class ModuloController extends Controller
@@ -19,38 +20,22 @@ class ModuloController extends Controller
         return view('modulos-formulario');
     }
 
-    public function store(ModuloRequest $request)
+    public function store(ModuloRequest $request, RegistrarModuloAction $action)
     {
-        $data   = $request->validated();
-        $raizId = null;
-        $msg = ['icon'  => 'error', 'title' => 'Ocurrió un error al registrar el módulo'];
+        try {
 
-        if(!empty($data['modulo-dependiente'])) {
-            $raizId = Modulo::moduloDependienteID($data['modulo-dependiente'])->value('id');
+            $action->handle($request->validated());
+            
+            Swal::fire(['icon' => 'success', 'title' => 'Se registró el módulo correctamente']);
+            return to_route('modulos.index');
+
+        } catch(Exception $e) {
+
+            Log::error($e);
+            Swal::fire(['icon' => 'error', 'title' => 'Ocurrió un error al registrar']);
+            return back()->withInput();
+
         }
-
-        DB::transaction(function () use ($data, $raizId, &$msg) {
-
-            $orden = app(ResolverOrdenModulo::class)->handle($data['orden'] ?? null, $raizId);
-
-            $modulo = Modulo::create([
-                'nombre'         => $data['nombre'],
-                'icono'          => $data['icono'],
-                'uri'            => $data['uri'],
-                'descripcion'    => $data['descripcion'] ?? null,
-                'modulo_raiz_id' => $raizId,
-                'orden'          => $orden,
-            ]);
-
-            Auth::user()->perfil->modulos()->attach($modulo->id);
-            Modulo::normalizarOrden($raizId, $modulo->id, $orden);
-
-            $msg = ['icon'  => 'success','title' => 'Se registró el módulo correctamente'];
-
-        });
-
-        Swal::fire($msg);
-        return to_route('modulos.index');
     }
 
     public function edit(Modulo $modulo) {
@@ -63,47 +48,21 @@ class ModuloController extends Controller
         return view('modulos-formulario', compact('modulo', 'moduloDepUlid', 'titulo', 'accion'));
     }
 
-    public function update(ModuloRequest $request, Modulo $modulo)
+    public function update(ModuloRequest $request, Modulo $modulo, ActualizarModuloAction $action)
     {
-        $msg    = ['icon' => 'error', 'title' => 'Ocurrió un error al actualizar'];
-        $data   = $request->validated();
-        $raizAnteriorId = $modulo->modulo_raiz_id;
-        $raizId = null;
+        try {
 
-        if (!empty($data['modulo-dependiente'])) {
-            $raizId = Modulo::moduloDependienteID($data['modulo-dependiente'])->value('id');
+            $action->handle($request->validated(), $modulo);
+
+            Swal::fire(['icon' => 'success', 'title' => 'Se actualizó el registro correctamente']);
+            return to_route('modulos.index');
+
+        } catch(Exception $e) {
+
+            Log::error($e);
+            Swal::fire(['icon' => 'error', 'title' => 'Ocurrió un error al actualizar']);
+            return back()->withInput();
+
         }
-
-        DB::transaction(function () use ($modulo, $data, &$msg, $raizId, $raizAnteriorId) {
-
-            $orden = app(ResolverOrdenModulo::class)->handle(
-                $data['orden'] ?? null,
-                $raizId,
-                $modulo->id,
-                $raizAnteriorId
-            );
-
-            // Primero actualizamos el módulo con su nuevo orden
-            $modulo->update([
-                'nombre'         => $data['nombre'],
-                'icono'          => $data['icono'],
-                'uri'            => $data['uri'],
-                'descripcion'    => $data['descripcion'] ?? null,
-                'modulo_raiz_id' => $raizId,
-                'orden'          => $orden,
-            ]);
-
-            // Luego normalizamos, ya con el módulo en su nueva posición
-            Modulo::normalizarOrden($raizId, $modulo->id, $orden);
-
-            if ($raizAnteriorId !== $raizId) {
-                Modulo::normalizarOrden($raizAnteriorId);
-            }
-
-            $msg = ['icon' => 'success', 'title' => 'Se actualizó el registro correctamente'];
-        });
-
-        Swal::fire($msg);
-        return to_route('modulos.index');
     }
 }

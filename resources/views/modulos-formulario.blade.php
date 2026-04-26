@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <h1 class="mb-2 text-[35px] font-bold">{{ $titulo ?? 'Registrar nuevo Módulo' }}</h1>
+    <x-app.title> {{ $titulo ?? 'Registrar nuevo Módulo' }} </x-app.title>
     <x-app.breadcrumb :links="[
         'Modulos' => '/modulos',
         $accion ?? 'Registro' => '',

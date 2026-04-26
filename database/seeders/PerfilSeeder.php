@@ -12,7 +12,7 @@ class PerfilSeeder extends Seeder
     {
         DB::table('perfiles')->insert([
             'id'            => 1,
-            'ulid'          => Str::ulid(),
+            'ulid'          => strtolower(Str::ulid()),
             'nombre'        => 'Administrador',
             'descripcion'   => 'Perfil con acceso total al sistema',
             'estatus'       => 1,

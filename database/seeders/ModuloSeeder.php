@@ -28,7 +28,7 @@ class ModuloSeeder extends Seeder
 
         foreach ($modulos as $raiz) {
             $raizId = DB::table('modulos')->insertGetId([
-                'ulid'           => Str::ulid(),
+                'ulid'           => strtolower(Str::ulid()),
                 'modulo_raiz_id' => null,
                 'icono'          => $raiz['icono'],
                 'nombre'         => $raiz['nombre'],
@@ -41,7 +41,7 @@ class ModuloSeeder extends Seeder
 
             foreach ($raiz['hijos'] ?? [] as $hijo) {
                 DB::table('modulos')->insert([
-                    'ulid'           => Str::ulid(),
+                    'ulid'           => strtolower(Str::ulid()),
                     'modulo_raiz_id' => $raizId,
                     'icono'          => $hijo['icono'],
                     'nombre'         => $hijo['nombre'],

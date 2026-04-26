@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <h1 class="mb-2 text-[35px] font-bold">Perfiles</h1>
+    <x-app.title> Perfiles </x-app.title>
     <x-app.breadcrumb :links="[
         'Perfiles' => '/perfiles',
     ]" />
@@ -15,7 +15,7 @@
             class="grid grid-cols-6 gap-3">
             @csrf
 
-            <div class="col-span-3">
+            <div class="col-span-full md:col-span-3">
                 <x-input.text
                     label="Nombre:"
                     type="text"
@@ -36,14 +36,14 @@
                 />
 
                 <button type="button" class="btn btn-error col-span-full sm:col-span-3 hidden" id="btn-eliminar">
-                    <span class="material-symbols-rounded relative top-0.75">
+                    <span class="material-symbols-rounded relative -top-2.5 xs:top-0.75">
                         delete
                     </span>
-                    <span class="relative -top-0.5">Eliminar</span>
+                    <span class="relative -top-3.75 xs:-top-0.5">Eliminar</span>
                 </button>
             </div>
 
-            <div class="col-span-3">
+            <div class="col-span-full md:col-span-3">
                 <p class="text-sm font-medium mb-1.25 text-[13px] mt-2">Módulos con acceso:</p>
                 <div id="jstree-modulos"
                      class="border border-base-300 rounded-lg p-2 min-h-40 bg-base-200 text-sm overflow-auto max-h-80">

@@ -3,7 +3,7 @@ const selectModulos = new Select('#select-modulos', {
     name: 'modulo-dependiente',
     labelKey: 'nombre',
     valueKey: 'ulid',
-    searchable: false
+    searchable: false,
 });
 
 const btnEliminar = document.getElementById('btn-eliminar');

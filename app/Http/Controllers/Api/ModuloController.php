@@ -7,7 +7,6 @@ use App\Http\Requests\ModuloRequest;
 use App\Http\Resources\ModuloResource;
 use App\Http\Resources\ModuloCollection;
 use App\Models\Modulo;
-use Illuminate\Support\Facades\Auth;
 
 class ModuloController extends Controller
 {
@@ -22,7 +21,6 @@ class ModuloController extends Controller
         $listaSecuencial = collect();
 
         foreach ($modulosRaiz as $padre) {
-
             $listaSecuencial->push($padre);
 
             if ($padre->children->isNotEmpty()) {
@@ -36,7 +34,6 @@ class ModuloController extends Controller
     }
 
     public function update(ModuloRequest $request, Modulo $modulo) {
-
         $modulo->update($request->validated());
         return new ModuloResource($modulo);
     }

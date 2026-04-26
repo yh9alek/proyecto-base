@@ -16,5 +16,4 @@ Route::middleware(['auth'])->group(function() {
         'perfiles' => PerfilController::class,
         'modulos'  => ModuloController::class,
     ]);
-
 });

@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <h1 class="mb-2 text-[35px] font-bold">Módulos Principales</h1>
+    <x-app.title> Módulos Principales </x-app.title>
     <x-app.breadcrumb :links="[
         'Modulos' => '/modulos',
     ]" />
