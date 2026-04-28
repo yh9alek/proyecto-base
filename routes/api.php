@@ -11,17 +11,17 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::name('api.')->group(function() {
 
         Route::get('/render-sidebar', fn() => view('layouts.sidebar'));
-        Route::get('/modulos_raiz', [ModuloController::class, 'modulosRaiz']);
 
-        Route::controller(PerfilController::class)->group(function() {
-            Route::get('/perfiles/{perfil}/modulos-arbol', 'modulosArbol');
-            Route::get('/perfiles/modulos-arbol', 'modulosArbolVacio');
-        });
+        Route::get('/modulos_raiz',  [ModuloController::class, 'modulosRaiz']);
+        Route::get('/modulos/arbol', [ModuloController::class, 'arbol']);
+        Route::get('/perfiles/{perfil}/modulos-arbol', [ModuloController::class, 'arbolPorPerfil']);
 
         Route::apiResources([
             'usuarios' => UserController::class,
             'perfiles' => PerfilController::class,
             'modulos'  => ModuloController::class
+        ], [
+            'parameters' => [ 'perfiles' => 'perfil' ]
         ]);
 
     });

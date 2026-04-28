@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Usuarios;
 
 use App\Models\Perfil;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class PrepararDataUserAction

@@ -48,12 +48,12 @@ async function abrirModalCrear() {
     document.getElementById('btn-eliminar').style.display = 'none';
     validator.reset();
  
-    const res = await axios.get('/perfiles/modulos-arbol');
+    const res = await axios.get('/modulos/arbol');
     inicializarArbol(res.data);
  
     modal.showModal();
 }
- 
+
 async function abrirModalEditar({ ulid, nombre, descripcion }) {
     modoEdicion = true;
     ulidEdicion = ulid;
@@ -89,7 +89,7 @@ async function guardar() {
     await refrescarSidebar();
     tablePerfiles.recargarDatos();
 }
-  
+
 btnConf.addEventListener('click', () => form.requestSubmit());
 
 btnEliminar.addEventListener('click', async () => {

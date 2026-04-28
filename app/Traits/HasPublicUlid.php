@@ -2,19 +2,31 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Support\Str;
 
 /**
  * No exponer publicamente IDs numéricos PK's y FK's.
  */
 trait HasPublicUlid
 {
-    use HasUlids;
-
     # La PK sigue siendo el id numérico autoincremental
     protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'int';
+
+    protected static function bootHasPublicUlid(): void
+    {
+        static::creating(function ($model) {
+            if (empty($model->ulid)) {
+                $model->ulid = strtolower((string) Str::ulid());
+            }
+        });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'ulid';
+    }
 
     # Solo la columna 'ulid' recibe el valor generado
     public function uniqueIds(): array
@@ -38,10 +50,5 @@ trait HasPublicUlid
         );
 
         return ['id', ...$fks];
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'ulid';
     }
 }
